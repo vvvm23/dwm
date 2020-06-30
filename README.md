@@ -1,10 +1,8 @@
 # My build of DWM
----
 
 A work-in-progress build for dynamic window manager. Mostly default bindings except modifier key is SUPER and not ALT (ew)
 
 ## Patches Applied
----
 
 - vanitygaps, for the pointless aesthetics
 - scratchpad, for a nice pop up terminal (useful for quick notes, compiling station, etc.)
@@ -15,18 +13,15 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 - noborder, turns off borders when there is only one window
 
 ## Additional Layouts
----
 - bottomstack & bottomstackhorz 
 
 ## Additional Features
----
 - More obvious highlighting of focussed windows (conversely, toning down of unfocussed windows)
 - Screenshot bindings provided by flameshot
 - Audio control bindings using default X11 media keys
 - Getting rid of annoying version number in bar
 
 ## Todo(s):
----
 - Generic gaps support for any additional layouts. Currently only the default work with gaps.
 - A fancier status bar, either dwmblocks or polybar
 - Status bar widgets like in my i3blocks repo
