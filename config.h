@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -83,6 +84,9 @@ static const char *termcmd[]        = { "st", NULL };
 static const char *browsercmd[]     = { "brave", NULL };
 static const char *rangercmd[]      = { "st", "-e", "ranger", NULL };
 static const char *flameshotcmd[]   = {"flameshot", "gui", NULL};
+static const char *volupcmd[]       = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *voldowncmd[]     = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *volmutecmd[]     = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -113,6 +117,9 @@ static Key keys[] = {
   { MODKEY,                       XK_r,      spawn,          {.v = rangercmd } },
   { MODKEY|ShiftMask,             XK_s,      togglescratch,  {.v = scratchpadcmd } },
   { MODKEY,                       XK_s,      spawn,          {.v = flameshotcmd } },
+  { 0,                            XF86XK_AudioRaiseVolume,   spawn, { .v = volupcmd } },
+  { 0,                            XF86XK_AudioLowerVolume,   spawn, { .v = voldowncmd } },
+  { 0,                            XF86XK_AudioMute,          spawn, { .v = volmutecmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
