@@ -46,6 +46,9 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
+/* focusonclick */
+static const int focusonwheel = 0;
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
