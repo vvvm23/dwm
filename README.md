@@ -14,6 +14,7 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 
 ## Additional Layouts
 - bottomstack & bottomstackhorz 
+- centeredmaster & centeredfloatingmaster
 
 ## Additional Features
 - More obvious highlighting of focussed windows (conversely, toning down of unfocussed windows)

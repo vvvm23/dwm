@@ -71,6 +71,8 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
   { "TTT",      bstack }, 
   { "===",      bstackhoriz },
+  { "|M|",      centeredmaster },
+  { ">M>",      centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -126,7 +128,9 @@ static Key keys[] = {
   { MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
   { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = flameshotcmd } },
   { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3] } },
-  { MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4] } },
+  { MODKEY|ShiftMask,             XK_u,      setlayout,      {.v = &layouts[4] } },
+  { MODKEY,                       XK_o,      setlayout,      {.v = &layouts[5] } },
+  { MODKEY|ShiftMask,             XK_o,      setlayout,      {.v = &layouts[6] } }, 
   { 0,                            XF86XK_AudioRaiseVolume,   spawn, { .v = volupcmd } },
   { 0,                            XF86XK_AudioLowerVolume,   spawn, { .v = voldowncmd } },
   { 0,                            XF86XK_AudioMute,          spawn, { .v = volmutecmd } },

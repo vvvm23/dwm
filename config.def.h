@@ -50,8 +50,13 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+<<<<<<< ours
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
+=======
+	{ "|M|",      centeredmaster },
+	{ ">M>",      centeredfloatingmaster },
+>>>>>>> theirs
 };
 
 /* key definitions */
