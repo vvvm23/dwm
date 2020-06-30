@@ -44,7 +44,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
@@ -69,6 +69,8 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+  { "TTT",      bstack }, 
+  { "===",      bstackhoriz },
 };
 
 /* key definitions */
@@ -123,6 +125,8 @@ static Key keys[] = {
   { MODKEY,                       XK_r,      spawn,          {.v = rangercmd } },
   { MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
   { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = flameshotcmd } },
+  { MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3] } },
+  { MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4] } },
   { 0,                            XF86XK_AudioRaiseVolume,   spawn, { .v = volupcmd } },
   { 0,                            XF86XK_AudioLowerVolume,   spawn, { .v = voldowncmd } },
   { 0,                            XF86XK_AudioMute,          spawn, { .v = volmutecmd } },
