@@ -23,6 +23,7 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 - Audio control bindings using default X11 media keys
 - Getting rid of annoying version number in bar
 - Fixing issues with dual screen, 21:9 on duplicated status bars (by quite literally painting over the problem)
+- Toggle bar and status bar independently with META+SHIFT+b
 
 ## Todo(s):
 - Generic gaps support for any additional layouts. Currently only the default work with gaps.
