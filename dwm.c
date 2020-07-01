@@ -133,6 +133,7 @@ struct Monitor {
 	unsigned int sellt;
 	unsigned int tagset[2];
 	int showbar;
+  int showstatus;
 	int topbar;
 	Client *clients;
 	Client *sel;
@@ -719,6 +720,7 @@ createmon(void)
 	m->mfact = mfact;
 	m->nmaster = nmaster;
 	m->showbar = showbar;
+  m->showstatus = 0;
 	m->topbar = topbar;
 	m->gappih = gappih;
 	m->gappiv = gappiv;
@@ -791,7 +793,8 @@ drawbar(Monitor *m)
 	Client *c;
 
 	/* draw status first so it can be overdrawn by tags later */
-  if (m == selmon || 1) { //[> status is only drawn on selected monitor <]
+  /*if (m == selmon || 1) { //[> status is only drawn on selected monitor <]*/
+  if (m->showstatus) {
     drw_setscheme(drw, scheme[SchemeNorm]);
     tw = TEXTW(stext) - lrpad + 2; //[> 2px right padding <]
     drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
@@ -829,8 +832,13 @@ drawbars(void)
 {
 	Monitor *m;
 
-	for (m = mons; m; m = m->next)
-		drawbar(m);
+  for (m = mons; m; m = m->next)
+    drawbar(m);
+
+  /*for (m = mons; m; m = m->next) {*/
+    /*drawbar(m);*/
+    /*break;*/
+  /*}*/
 }
 
 void
@@ -2090,7 +2098,10 @@ updategeom(void)
 				if (m)
 					m->next = createmon();
 				else
+        {
 					mons = createmon();
+          mons->showstatus = 1;
+        }
 			}
 			for (i = 0, m = mons; i < nn && m; m = m->next, i++)
 				if (i >= n
@@ -2125,8 +2136,10 @@ updategeom(void)
 	} else
 #endif /* XINERAMA */
 	{ /* default monitor setup */
-		if (!mons)
+    if (!mons) {
 			mons = createmon();
+      mons->showstatus = 1;
+    }
 		if (mons->mw != sw || mons->mh != sh) {
 			dirty = 1;
 			mons->mw = mons->ww = sw;
