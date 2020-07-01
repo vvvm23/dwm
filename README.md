@@ -11,6 +11,7 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 - notitle, does what it says on the tin
 - swallow, prevents that annoying linux-y thing of leaving useless terminals when launching GUI applications from them
 - noborder, turns off borders when there is only one window
+- statusallmons, update status bar across all monitors
 
 ## Additional Layouts
 - bottomstack & bottomstackhorz 
@@ -28,3 +29,4 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 - Status bar widgets like in my i3blocks repo
 - Define rules for swallowing (for example, walter eats the debug terminal. not great)
 - Define rules for floating (for example, walter (again) eats the screen space when it should float)
+- Fix multi monitor bars
