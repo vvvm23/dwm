@@ -22,11 +22,9 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 - Screenshot bindings provided by flameshot
 - Audio control bindings using default X11 media keys
 - Getting rid of annoying version number in bar
+- Fixing issues with dual screen, 21:9 on duplicated status bars (by quite literally painting over the problem)
 
 ## Todo(s):
 - Generic gaps support for any additional layouts. Currently only the default work with gaps.
-- A fancier status bar, either dwmblocks or polybar
-- Status bar widgets like in my i3blocks repo
 - Define rules for swallowing (for example, walter eats the debug terminal. not great)
 - Define rules for floating (for example, walter (again) eats the screen space when it should float)
-- Fix multi monitor bars

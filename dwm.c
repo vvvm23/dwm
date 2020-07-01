@@ -232,6 +232,7 @@ static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
+static void togglestatus(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void togglescratch(const Arg *arg);
 static void toggletag(const Arg *arg);
@@ -793,12 +794,19 @@ drawbar(Monitor *m)
 	Client *c;
 
 	/* draw status first so it can be overdrawn by tags later */
-  /*if (m == selmon || 1) { //[> status is only drawn on selected monitor <]*/
-  if (m->showstatus) {
+  if (m->next) {
+  /*if (m == mons) {*/
     drw_setscheme(drw, scheme[SchemeNorm]);
     tw = TEXTW(stext) - lrpad + 2; //[> 2px right padding <]
     drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
+  } else {
+    drw_setscheme(drw, scheme[SchemeNorm]);
+    tw = TEXTW(stext) - lrpad + 2; //[> 2px right padding <]
+    drw_text(drw, m->ww - tw, 0, tw, bh, 0, "", 0);
   }
+  /*drw_setscheme(drw, scheme[SchemeNorm]);*/
+  /*tw = TEXTW(stext) - lrpad + 2; //[> 2px right padding <]*/
+  /*drw_text(drw, mons->ww - tw, 0, tw, bh, 0, stext, 0);*/
 
 	for (c = m->clients; c; c = c->next) {
 		occ |= c->tags;
@@ -820,11 +828,20 @@ drawbar(Monitor *m)
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = m->ww - sw - x) > bh) {
-			drw_setscheme(drw, scheme[SchemeNorm]);
-			drw_rect(drw, x, 0, w, bh, 1, 1);
-	}
-	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
+  if ((w = m->ww - sw - x) > bh) {
+      drw_setscheme(drw, scheme[SchemeNorm]);
+      drw_rect(drw, x, 0, w, bh, 1, 1);
+  }
+
+  if (m->next) {
+    drw_setscheme(drw, scheme[SchemeNorm]);
+    drw_rect(drw, x, 0, m->ww-tw-x, bh, 1, 1);
+  } else {
+    drw_setscheme(drw, scheme[SchemeNorm]);
+    drw_rect(drw, x, 0, m->ww-x, bh, 1, 1);
+  }
+
+  drw_map(drw, m->barwin, 0, 0, m->ww, bh);
 }
 
 void
@@ -835,10 +852,6 @@ drawbars(void)
   for (m = mons; m; m = m->next)
     drawbar(m);
 
-  /*for (m = mons; m; m = m->next) {*/
-    /*drawbar(m);*/
-    /*break;*/
-  /*}*/
 }
 
 void
@@ -1747,8 +1760,10 @@ setup(void)
 	for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], alphas[i], 3);
 	/* init bars */
-	updatebars();
-	updatestatus();
+
+  updatebars();
+  updatestatus();
+
 	/* supporting window for NetWMCheck */
 	wmcheckwin = XCreateSimpleWindow(dpy, root, 0, 0, 1, 1, 0, 0, 0);
 	XChangeProperty(dpy, wmcheckwin, netatom[NetWMCheck], XA_WINDOW, 32,
@@ -1886,6 +1901,13 @@ togglebar(const Arg *arg)
 	updatebarpos(selmon);
 	XMoveResizeWindow(dpy, selmon->barwin, selmon->wx, selmon->by, selmon->ww, bh);
 	arrange(selmon);
+}
+
+void
+togglestatus(const Arg *arg)
+{
+	selmon->showstatus = !selmon->showstatus;
+  updatebars();
 }
 
 void
@@ -2031,10 +2053,16 @@ updatebars(void)
 		.colormap = cmap,
 		.event_mask = ButtonPressMask|ExposureMask
 	};
+  int statwin = 1;
 	XClassHint ch = {"dwm", "dwm"};
 	for (m = mons; m; m = m->next) {
 		if (m->barwin)
 			continue;
+    if (statwin) {
+      m->showstatus = 1;
+      statwin = 0;
+    }
+
 		m->barwin = XCreateWindow(dpy, root, m->wx, m->by, m->ww, bh, 0, depth,
 		                          InputOutput, visual,
 		                          CWOverrideRedirect|CWBackPixel|CWBorderPixel|CWColormap|CWEventMask, &wa);
@@ -2217,10 +2245,13 @@ void
 updatestatus(void)
 {
   Monitor *m;
-	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
-		strcpy(stext, "dwm-"VERSION);
+
+  if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
+    strcpy(stext, "dwm-"VERSION);
+
   for (m = mons; m; m = m->next)
-    drawbar(m);
+    if (m->showstatus) drawbar(m);
+  /*drawbar(mons);*/
 }
 
 void
