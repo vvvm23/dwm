@@ -27,5 +27,6 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 
 ## Todo(s):
 - Generic gaps support for any additional layouts. Currently only the default work with gaps.
-- Define rules for swallowing (for example, walter eats the debug terminal. not great)
-- Define rules for floating (for example, walter (again) eats the screen space when it should float)
+- Define rules for swallowing 
+- Define rules for floating 
+- Deadlines in position where win title used to be.
