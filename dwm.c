@@ -219,7 +219,7 @@ static void setfullscreen(Client *c, int fullscreen);
 /*static void incrovgaps(const Arg *arg);*/
 /*static void incrihgaps(const Arg *arg);*/
 /*static void incrivgaps(const Arg *arg);*/
-/*static void togglegaps(const Arg *arg);*/
+static void togglegaps(const Arg *arg);
 /*static void defaultgaps(const Arg *arg);*/
 static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
@@ -1602,12 +1602,12 @@ setfullscreen(Client *c, int fullscreen)
 	/*arrange(selmon);*/
 /*}*/
 
-/*void*/
-/*togglegaps(const Arg *arg)*/
-/*{*/
-	/*enablegaps = !enablegaps;*/
-	/*arrange(selmon);*/
-/*}*/
+void
+togglegaps(const Arg *arg)
+{
+    enablegaps = !enablegaps;
+    arrange(selmon);
+}
 
 /*void*/
 /*defaultgaps(const Arg *arg)*/
