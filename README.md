@@ -14,8 +14,8 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 - statusallmons, update status bar across all monitors
 
 ## Additional Layouts
-- bottomstack & bottomstackhorz 
-- centeredmaster & centeredfloatingmaster
+- bottomstack (bottomstackhorz in code but disabled)
+- centeredmaster (centeredfloatingmaster, also disabled)
 
 ## Additional Features
 - More obvious highlighting of focussed windows (conversely, toning down of unfocussed windows)
@@ -24,9 +24,9 @@ A work-in-progress build for dynamic window manager. Mostly default bindings exc
 - Getting rid of annoying version number in bar
 - Fixing issues with dual screen, 21:9 on duplicated status bars (by quite literally painting over the problem)
 - Toggle bar and status bar independently with META+SHIFT+b
+- Gaps for some additional layouts
 
 ## Todo(s):
-- Generic gaps support for any additional layouts. Currently only the default work with gaps.
 - Define rules for swallowing 
 - Define rules for floating 
 - Deadlines in position where win title used to be.

@@ -2599,7 +2599,7 @@ bstack(Monitor *m) {
 void
 centeredmaster(Monitor *m)
 {
-    // TODO: Smart gaps!
+    // TODO: Confirm gaps are actually calculated correctly (as all types are currently equal!)
 	unsigned int i, n, h, mw, mx, my, oty, ety, tw, oe = enablegaps, ie = enablegaps;
 	Client *c;
 
@@ -2610,11 +2610,6 @@ centeredmaster(Monitor *m)
     if (smartgaps == n) {
         oe = 0;
     }
-    /*if (n == 1) {*/
-        /*c = nexttiled(m->clients);*/
-        /*resize(c, m->wx, m->wy, m->ww - 2*c->bw, m->wh - 2*c->bw, 0);*/
-        /*return;*/
-    /*}*/
 
 	/* initialize areas */
 	mw = m->ww;
