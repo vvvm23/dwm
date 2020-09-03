@@ -93,13 +93,13 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[]       = { "dmenu_run", NULL };
 static const char *termcmd[]        = { "st", NULL };
 static const char *browsercmd[]     = { "brave", NULL };
+static const char *spotifycmd[]     = { "spotify", NULL };
 static const char *rangercmd[]      = { "st", "-e", "ranger", NULL };
 static const char *flameshotcmd[]   = {"flameshot", "gui", NULL};
 static const char *volupcmd[]       = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
 static const char *voldowncmd[]     = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
 static const char *volmutecmd[]     = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
-static const char *lightupcmd[]        = { "xbacklight", "-inc", "10", NULL };
-static const char *lightdowncmd[]      = { "xbacklight", "-dec", "10", NULL };
+static const char *unicmd[]         = { "st", "-e", "unimatrix", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -129,6 +129,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
     { MODKEY,                       XK_g,      togglegaps,     {0} },
   { MODKEY,                       XK_c,      spawn,          {.v = browsercmd } },
+  { MODKEY|ShiftMask,             XK_c,      spawn,          {.v = spotifycmd } },
   { MODKEY,                       XK_r,      spawn,          {.v = rangercmd } },
   { MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
   { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = flameshotcmd } },
@@ -139,8 +140,7 @@ static Key keys[] = {
   { 0,                            XF86XK_AudioRaiseVolume,   spawn, { .v = volupcmd } },
   { 0,                            XF86XK_AudioLowerVolume,   spawn, { .v = voldowncmd } },
   { 0,                            XF86XK_AudioMute,          spawn, { .v = volmutecmd } },
-  { MODKEY, 				      XK_F4,                     spawn, { .v = lightupcmd }},
-  { MODKEY, 				      XK_F3,                     spawn, { .v = lightdowncmd }},
+  { 0,                            XF86XK_Calculator,         spawn, { .v = unicmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
