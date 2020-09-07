@@ -2553,49 +2553,90 @@ main(int argc, char *argv[])
 	return EXIT_SUCCESS;
 }
 
-static void
-bstack(Monitor *m) {
-	int w, h, mh, mx, tx, ty, tw, oe = enablegaps, ie = enablegaps, r;
-	unsigned int i, n;
+/*static void*/
+/*bstack(Monitor *m) {*/
+	/*int w, h, mh, mx, tx, ty, tw, oe = enablegaps, ie = enablegaps, r;*/
+	/*unsigned int i, n;*/
+	/*Client *c;*/
+
+	/*for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);*/
+	/*if (n == 0)*/
+		/*return;*/
+    /*if (smartgaps == n) {*/
+        /*oe = 0;*/
+    /*}*/
+
+	/*if (n > m->nmaster) {*/
+		/*mh = m->nmaster ? m->mfact * (m->wh + m->gappih*ie) : 0;*/
+        /*[>tw = (m->ww - m->gappoh*oe - m->gappih*ie);<]*/
+        /*tw = (m->ww - m->gappoh*oe - m->gappih*ie * (n - m->nmaster - 1)) / (n - m->nmaster);*/
+		/*ty = m->wy + mh;*/
+	/*} else {*/
+		/*mh = m->wh - 2*m->gappoh*oe + m->gappih*ie;*/
+        /*tw = m->ww - m->gappoh*oe;*/
+		/*ty = m->wy;*/
+	/*}*/
+    /*[>for (i = mx = 0, tx = m->wx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {<]*/
+    /*for (i = mx = 0, tx = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {*/
+		/*if (i < m->nmaster) {*/
+            /*r = MIN(n, m->nmaster) - i;*/
+			/*[>w = (m->ww - mx - m->gappov*oe - m->gappiv*ie * (r - 1)) / r;<]*/
+			/*w = (m->ww - mx - m->gappoh*oe - m->gappih*ie * (r - 1)) / r;*/
+			/*resize(c, m->wx + mx + m->gappoh*oe, m->wy + m->gappoh*oe, w - (2 * c->bw) - m->gappoh*oe, mh - (2 * c->bw) - m->gappih*ie, 0);*/
+			/*mx += WIDTH(c) + m->gappih*ie;*/
+		/*} else {*/
+            /*r = n - i;*/
+			/*h = m->wh - mh - m->gappoh*oe - m->gappih*ie;*/
+            /*w = (m->ww - tx -m->gappoh*oe - m->gappih*ie * (r-1)) / r;*/
+            /*resize(c, tx + m->gappoh*oe, ty + m->gappoh*oe, w - (2 * c->bw) - m->gappoh*oe, h - (2 * c->bw), 0);*/
+            /*[>resize(c, tx + m->gappoh*oe, ty + m->gappoh*oe, tw - (2 * c->bw) - m->gappoh*oe, h - (2 * c->bw), 0);<]*/
+            /*[>resize(c, tx + m->gappoh*oe, ty + m->gappoh*oe, tw - (2 * c->bw), h - (2 * c->bw), 0);<]*/
+            /*if (tw != m->ww)*/
+				/*tx += WIDTH(c) + m->gappih*ie;*/
+    /*}*/
+  /*}*/
+/*}*/
+void
+bstack(Monitor *m)
+{
+	unsigned int i, n, w, mh, mx, tx, ns, oe = enablegaps, ie = enablegaps;
 	Client *c;
 
 	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
 	if (n == 0)
 		return;
-    if (smartgaps == n) {
-        oe = 0;
-    }
+  if (smartgaps == n) oe = 0;
+	/*if(n == 1){*/
+		/*c = nexttiled(m->clients);*/
+		/*resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);*/
+		/*return;*/
+	/*}*/
 
-	if (n > m->nmaster) {
-		mh = m->nmaster ? m->mfact * (m->wh + m->gappih*ie) : 0;
-        /*tw = (m->ww - m->gappoh*oe - m->gappih*ie);*/
-        tw = (m->ww - m->gappoh*oe - m->gappih*ie * (n - m->nmaster - 1)) / (n - m->nmaster);
-		ty = m->wy + mh;
-	} else {
-		mh = m->wh - 2*m->gappoh*oe + m->gappih*ie;
-        tw = m->ww - m->gappoh*oe;
-		ty = m->wy;
+	if (n > m->nmaster){
+		mh = m->nmaster ? m->wh * m->mfact : m->gappoh*oe;
+		ns = 2;
 	}
-    /*for (i = mx = 0, tx = m->wx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {*/
-    for (i = mx = 0, tx = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+	else{
+		mh = m->wh;
+		ns = 1;
+	}
+	for (i = 0, mx = tx = m->gappih*ie, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
-            r = MIN(n, m->nmaster) - i;
-			/*w = (m->ww - mx - m->gappov*oe - m->gappiv*ie * (r - 1)) / r;*/
-			w = (m->ww - mx - m->gappoh*oe - m->gappih*ie * (r - 1)) / r;
-			resize(c, m->wx + mx + m->gappoh*oe, m->wy + m->gappoh*oe, w - (2 * c->bw) - m->gappoh*oe, mh - (2 * c->bw) - m->gappih*ie, 0);
-			mx += WIDTH(c) + m->gappih*ie;
+			w = (m->ww - mx) / (MIN(n, m->nmaster) - i) - m->gappih*ie;
+			resize(c, m->wx + mx, m->wy + m->gappiv*ie, w - 2*c->bw, mh - 2*c->bw - m->gappiv*ie*(5-ns)/2, 0);
+			if(mx + WIDTH(c) + m->gappih*ie < m->mw)
+				mx += WIDTH(c) + m->gappih*ie;
 		} else {
-            r = n - i;
-			h = m->wh - mh - m->gappoh*oe - m->gappih*ie;
-            w = (m->ww - tx -m->gappoh*oe - m->gappih*ie * (r-1)) / r;
-            resize(c, tx + m->gappoh*oe, ty + m->gappoh*oe, w - (2 * c->bw) - m->gappoh*oe, h - (2 * c->bw), 0);
-            /*resize(c, tx + m->gappoh*oe, ty + m->gappoh*oe, tw - (2 * c->bw) - m->gappoh*oe, h - (2 * c->bw), 0);*/
-            /*resize(c, tx + m->gappoh*oe, ty + m->gappoh*oe, tw - (2 * c->bw), h - (2 * c->bw), 0);*/
-            if (tw != m->ww)
+			w = (m->ww - tx) / (n - i) - m->gappih*ie;
+			if(m->nmaster == 0)
+				resize(c, m->wx + tx, m->wy + mh, w - (2*c->bw), m->wh - mh - 2*c->bw - m->gappiv*ie, False);
+			else
+				resize(c, m->wx + tx, m->wy + mh + m->gappiv*ie/ns, w - (2*c->bw), m->wh - mh - 2*c->bw - m->gappiv*ie*(5-ns)/2, False);
+			if (tx + WIDTH(c) + m->gappih*ie < m->mw)
 				tx += WIDTH(c) + m->gappih*ie;
-    }
-  }
+		}
 }
+
 void
 centeredmaster(Monitor *m)
 {

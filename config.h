@@ -57,7 +57,7 @@ static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34
 static const int focusonwheel = 0;
 
 /* alpha */
-static const unsigned int baralpha = 0xe0;
+static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
